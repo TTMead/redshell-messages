@@ -106,11 +106,11 @@ void test_deserialization()
 
 int main()
 {
-    printf("\nStarting Tests ...\n");
+    printf("\n ==== Starting Unit Tests ====\n");
     test_command_coding();
     test_encoder_coding();
     test_imu_coding();
     test_serialization();
     test_deserialization();
-    printf("End\n");
+    printf(" ==== Tests Complete ====\n\n");
 }
