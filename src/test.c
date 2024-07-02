@@ -1,9 +1,9 @@
 #include <stdio.h>
 
-#include "command.h"
-#include "encoder.h"
-#include "imu.h"
-#include "power.h"
+#include "redshell/command.h"
+#include "redshell/encoder.h"
+#include "redshell/imu.h"
+#include "redshell/power.h"
 
 
 void test_command_coding()

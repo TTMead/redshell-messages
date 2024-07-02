@@ -1,4 +1,4 @@
-HEADERS = include/command.h include/encoder.h include/imu.h include/power.h include/usb_protocol.h
+HEADERS = include/redshell/command.h include/redshell/encoder.h include/redshell/imu.h include/redshell/power.h include/redshell/usb_protocol.h
 CFLAGS = -Iinclude
 
 default: test
