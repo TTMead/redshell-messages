@@ -16,6 +16,7 @@
 #define START 0x66 // Execute Order 66 :D
 #define CRC16 0x8005
 #define MAX_DATA_SIZE 8
+#define MESSAGE_SIZE (4 + MAX_DATA_SIZE)
 
 typedef struct {
     uint8_t start; 

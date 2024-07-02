@@ -68,11 +68,49 @@ void test_imu_coding()
     }
 }
 
+void test_serialization()
+{
+    PacketInfo imu_packet = msg_imu_encode(1, 5, 127);
+
+    uint8_t serialized_message[MESSAGE_SIZE];
+    serialize(imu_packet, serialized_message);
+
+    printf("[PASSED] Serialization.\n");
+}
+
+void test_deserialization()
+{
+    PacketInfo imu_send_packet = msg_imu_encode(1, 5, 127);
+
+    uint8_t serialized_message[MESSAGE_SIZE];
+    serialize(imu_send_packet, serialized_message);
+
+    PacketInfo imu_receive_packet;
+    deserialize(imu_receive_packet, serialized_message);
+
+    int data_equal = 0;
+    for (int i = 0; i < MAX_DATA_SIZE; i++)
+    {
+        data_equal |= (imu_send_packet.data[i] == imu_receive_packet.data[i]);
+    }
+
+    if (data_equal)
+    {
+        printf("[PASSED] Deserialization.\n");
+    }
+    else
+    {
+        printf("[FAILED] Deserialization.\n");
+    }
+}
+
 int main()
 {
     printf("\nStarting Tests ...\n");
     test_command_coding();
     test_encoder_coding();
     test_imu_coding();
+    test_serialization();
+    test_deserialization();
     printf("End\n");
 }
