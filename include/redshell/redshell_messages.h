@@ -13,15 +13,15 @@
         CRC is 2 bytes
 */
 
-#define START 0x66 // Execute Order 66 :D
-#define CRC16 0x8005
-#define MAX_DATA_SIZE 8
-#define MESSAGE_SIZE (4 + MAX_DATA_SIZE)
+#define REDSHELL_START_BYTE 0x66 // Execute Order 66 :D
+#define REDSHELL_CRC16 0x8005
+#define REDSHELL_PAYLOAD_SIZE 8
+#define REDSHELL_MESSAGE_SIZE (4 + REDSHELL_PAYLOAD_SIZE)
 
 typedef struct {
     uint8_t start; 
     uint8_t id;
-    uint8_t data[MAX_DATA_SIZE];
+    uint8_t data[REDSHELL_PAYLOAD_SIZE];
     uint16_t crc;
 } PacketInfo;
 
@@ -46,7 +46,7 @@ uint16_t gen_crc16(const uint8_t *data, uint16_t size){
         }
         /* Cycle check: */
         if(bit_flag){
-            out ^= CRC16;
+            out ^= REDSHELL_CRC16;
         }
     }
     // item b) "push out" the last 16 bits
@@ -55,7 +55,7 @@ uint16_t gen_crc16(const uint8_t *data, uint16_t size){
         bit_flag = out >> 15;
         out <<= 1;
         if(bit_flag)
-            out ^= CRC16;
+            out ^= REDSHELL_CRC16;
     }
     // item c) reverse the bits
     uint16_t crc = 0;
@@ -71,24 +71,24 @@ void serialize(PacketInfo packet, uint8_t* serial_packet) {
     serial_packet[0] = packet.start;
     serial_packet[1] = packet.id;
 
-    for (int i = 0; i < MAX_DATA_SIZE; i++)
+    for (int i = 0; i < REDSHELL_PAYLOAD_SIZE; i++)
     {
         serial_packet[2 + i] = packet.data[i];
     }
 
-    serial_packet[2 + MAX_DATA_SIZE] = (packet.crc & 0xFF);
-    serial_packet[2 + MAX_DATA_SIZE + 1] = ((packet.crc >> 8) & 0xFF);
+    serial_packet[2 + REDSHELL_PAYLOAD_SIZE] = (packet.crc & 0xFF);
+    serial_packet[2 + REDSHELL_PAYLOAD_SIZE + 1] = ((packet.crc >> 8) & 0xFF);
 }
 
 void deserialize(PacketInfo packet, uint8_t* serial_packet) {
     packet.start = serial_packet[0];
     packet.id = serial_packet[1];
 
-    for (int i = 0; i < MAX_DATA_SIZE; i++)
+    for (int i = 0; i < REDSHELL_PAYLOAD_SIZE; i++)
     {
         packet.data[i] = serial_packet[2 + i];
     }
 
-    packet.crc = serial_packet[2 + MAX_DATA_SIZE] | (packet.crc << 8);
+    packet.crc = serial_packet[2 + REDSHELL_PAYLOAD_SIZE] | (packet.crc << 8);
 }
 #endif 

@@ -3,12 +3,12 @@
 
 #include "redshell_messages.h"
 
-#define MSG_ENCODER_ID 0x1
+#define REDSHELL_MSG_ID_ENCODER 0x1
 
 PacketInfo msg_encoder_encode(uint32_t speed_motor_left_rpm, uint32_t speed_motor_right_rpm) {
     PacketInfo result;
-    result.start = START;
-    result.id = MSG_ENCODER_ID;
+    result.start = REDSHELL_START_BYTE;
+    result.id = REDSHELL_MSG_ID_ENCODER;
 
     const int speed_size_bytes = 4;
     const int byte_size = 8;
@@ -17,7 +17,7 @@ PacketInfo msg_encoder_encode(uint32_t speed_motor_left_rpm, uint32_t speed_moto
         result.data[i + speed_size_bytes] = (speed_motor_right_rpm >> (byte_size * i)) & 0xFF;
     }
     
-    result.crc = gen_crc16(result.data, MAX_DATA_SIZE);
+    result.crc = gen_crc16(result.data, REDSHELL_PAYLOAD_SIZE);
     return result;
 }
 
