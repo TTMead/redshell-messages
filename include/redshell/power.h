@@ -1,7 +1,7 @@
 #ifndef POWER_H
 #define POWER_H
 
-#include "usb_protocol.h"
+#include "redshell_messages.h"
 
 #define POWER_ID 0x3
 #define POWER_ZERO_PADDING 32

@@ -1,7 +1,7 @@
 #ifndef IMU_H
 #define IMU_H
 
-#include "usb_protocol.h"
+#include "redshell_messages.h"
 
 #define MSG_IMU_ID 0x0
 

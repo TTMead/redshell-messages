@@ -1,5 +1,5 @@
-#ifndef USB_PROTOCOL_H
-#define USB_PROTOCOL_H
+#ifndef REDSHELL_MESSAGES_H
+#define REDSHELL_MESSAGES_H
 
 #include <stdlib.h>
 #include <stdint.h>

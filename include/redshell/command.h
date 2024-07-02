@@ -1,7 +1,7 @@
 #ifndef COMMAND_H
 #define COMMAND_H
 
-#include "usb_protocol.h"
+#include "redshell_messages.h"
 
 #define MSG_COMMAND_ID 0x2
 
