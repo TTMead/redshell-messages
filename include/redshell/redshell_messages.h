@@ -80,15 +80,15 @@ void serialize(PacketInfo packet, uint8_t* serial_packet) {
     serial_packet[2 + REDSHELL_PAYLOAD_SIZE + 1] = ((packet.crc >> 8) & 0xFF);
 }
 
-void deserialize(PacketInfo packet, uint8_t* serial_packet) {
-    packet.start = serial_packet[0];
-    packet.id = serial_packet[1];
+void deserialize(PacketInfo* packet, uint8_t* serial_packet) {
+    packet->start = serial_packet[0];
+    packet->id = serial_packet[1];
 
     for (int i = 0; i < REDSHELL_PAYLOAD_SIZE; i++)
     {
-        packet.data[i] = serial_packet[2 + i];
+        packet->data[i] = serial_packet[2 + i];
     }
 
-    packet.crc = serial_packet[2 + REDSHELL_PAYLOAD_SIZE] | (packet.crc << 8);
+    packet->crc = serial_packet[2 + REDSHELL_PAYLOAD_SIZE] | (packet->crc << 8);
 }
 #endif 

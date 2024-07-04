@@ -72,7 +72,7 @@ void test_serialization()
 {
     PacketInfo imu_packet = msg_imu_encode(1, 5, 127);
 
-    uint8_t serialized_message[MESSAGE_SIZE];
+    uint8_t serialized_message[REDSHELL_MESSAGE_SIZE];
     serialize(imu_packet, serialized_message);
 
     printf("[PASSED] Serialization.\n");
@@ -82,16 +82,24 @@ void test_deserialization()
 {
     PacketInfo imu_send_packet = msg_imu_encode(1, 5, 127);
 
-    uint8_t serialized_message[MESSAGE_SIZE];
+    // Serialize the imu packet
+    uint8_t serialized_message[REDSHELL_MESSAGE_SIZE];
     serialize(imu_send_packet, serialized_message);
 
+    // Create a receive packet filled with junk data
     PacketInfo imu_receive_packet;
-    deserialize(imu_receive_packet, serialized_message);
+    imu_receive_packet.data[0] = 9;
+    imu_receive_packet.data[1] = 100;
+    imu_receive_packet.data[2] = 42;
+    imu_receive_packet.data[3] = 75;
 
-    int data_equal = 0;
-    for (int i = 0; i < MAX_DATA_SIZE; i++)
+    // Override the receive packet with the deserialized message
+    deserialize(&imu_receive_packet, serialized_message);
+
+    int data_equal = 1;
+    for (int i = 0; i < REDSHELL_PAYLOAD_SIZE; i++)
     {
-        data_equal |= (imu_send_packet.data[i] == imu_receive_packet.data[i]);
+        data_equal = data_equal && (imu_send_packet.data[i] == imu_receive_packet.data[i]);
     }
 
     if (data_equal)
