@@ -8,12 +8,12 @@
 
 void test_command_coding()
 {
-    uint32_t send_motor_left = 30;
-    uint32_t send_motor_right = 137;
+    int32_t send_motor_left = 30;
+    int32_t send_motor_right = -137;
     PacketInfo command_packet = msg_command_encode(send_motor_left, send_motor_right);
 
-    uint32_t receive_motor_left;
-    uint32_t receive_motor_right;
+    int32_t receive_motor_left;
+    int32_t receive_motor_right;
     msg_command_decode(command_packet, &receive_motor_left, &receive_motor_right);
 
     if ((send_motor_left == receive_motor_left) && (send_motor_right == receive_motor_right))
@@ -28,12 +28,12 @@ void test_command_coding()
 
 void test_encoder_coding()
 {
-    uint32_t send_motor_left = 30;
-    uint32_t send_motor_right = 137;
+    int32_t send_motor_left = 30;
+    int32_t send_motor_right = -47;
     PacketInfo command_packet = msg_encoder_encode(send_motor_left, send_motor_right);
 
-    uint32_t receive_motor_left;
-    uint32_t receive_motor_right;
+    int32_t receive_motor_left;
+    int32_t receive_motor_right;
     msg_encoder_decode(command_packet, &receive_motor_left, &receive_motor_right);
 
     if ((send_motor_left == receive_motor_left) && (send_motor_right == receive_motor_right))

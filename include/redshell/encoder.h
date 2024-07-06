@@ -5,7 +5,7 @@
 
 #define REDSHELL_MSG_ID_ENCODER 0x1
 
-PacketInfo msg_encoder_encode(uint32_t speed_motor_left_rpm, uint32_t speed_motor_right_rpm) {
+PacketInfo msg_encoder_encode(int32_t speed_motor_left_rpm, int32_t speed_motor_right_rpm) {
     PacketInfo result;
     result.start = REDSHELL_START_BYTE;
     result.id = REDSHELL_MSG_ID_ENCODER;
@@ -21,7 +21,7 @@ PacketInfo msg_encoder_encode(uint32_t speed_motor_left_rpm, uint32_t speed_moto
     return result;
 }
 
-void msg_encoder_decode(PacketInfo packet, uint32_t* speed_motor_left_rpm, uint32_t* speed_motor_right_rpm) {
+void msg_encoder_decode(PacketInfo packet, int32_t* speed_motor_left_rpm, int32_t* speed_motor_right_rpm) {
     *speed_motor_left_rpm = packet.data[0] | (packet.data[1] << 8) | (packet.data[2] << 16) | (packet.data[3] << 24);
     *speed_motor_right_rpm = packet.data[4] | (packet.data[5] << 8) | (packet.data[6] << 16) | (packet.data[7] << 24);
 }
